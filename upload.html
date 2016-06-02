@@ -1,0 +1,94 @@
+
+
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.16.min.js"></script>
+
+<button id="login">Login</button>
+
+<script>
+  var s3;
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1708094952776490',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+  
+  document.getElementById('login').onclick = function() {
+    FB.login(function (response) {
+      if (response.authResponse) { // logged in
+        debugger;
+        AWS.config.credentials = new AWS.WebIdentityCredentials({
+          RoleArn: 'arn:aws:iam::144917287062:role/sgn-app-dev-img-upload-fb',
+          ProviderId: 'graph.facebook.com',
+          WebIdentityToken: response.authResponse.accessToken
+        });
+
+        
+
+        console.log('You are now logged in.');
+      } else {
+        console.log('There was a problem logging you in.');
+      }
+    });
+  };
+  
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+<script type="text/javascript">
+  // See the Configuring section to configure credentials in the SDK
+  //AWS.config.credentials = ...;
+  //AWS.config.update({accessKeyId: 'AKIAIMBPBZBTQDSWVCFQ', secretAccessKey: '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'});
+  
+//   AWS.config.credentials = new AWS.WebIdentityCredentials({
+//   RoleArn: 'arn:aws:iam::144917287062:role/sgn-app-dev-img-upload-fb',
+//   ProviderId: 'graph.facebook.com'//, // Omit this for Google
+//   //WebIdentityToken: ACCESS_TOKEN
+// });
+  
+  
+//arn:aws:iam::144917287062:role/sgn-app-dev-img-upload-fb
+  // Configure your region
+  AWS.config.region = 'us-west-2';
+</script>
+<h1>this code</h1>
+<input type="file" id="file-chooser" /> 
+<button id="upload-button">Upload to S3</button>
+<div id="results"></div>
+
+
+<script type="text/javascript">
+//s3 = new AWS.S3;
+  //var bucket = new AWS.S3({params: {Bucket: 'sgn-app-dev'}});
+//alert("hey");
+  var fileChooser = document.getElementById('file-chooser');
+  var button = document.getElementById('upload-button');
+  var results = document.getElementById('results');
+  button.addEventListener('click', function() {
+    var file = fileChooser.files[0];
+    if (file) {
+      results.innerHTML = '';
+var bucket = new AWS.S3({params: {Bucket: 'sgn-app-dev'}});
+      var params = {Key: file.name, ContentType: file.type, Body: file};
+      bucket.upload(params, function (err, data) {
+        debugger;
+        results.innerHTML = err ? 'ERROR!' : 'UPLOADED.<img src="' + data.Location + '" alt="Smiley face" height="42" width="42">';
+      });
+    } else {
+      results.innerHTML = 'Nothing to upload.';
+    }
+  }, false);
+</script>
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
