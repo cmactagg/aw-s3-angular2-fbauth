@@ -1,20 +1,7 @@
-// declare module 'aws-sdk' {
-//    var foo:any;
-//    export = foo;
-// }
-// declare module 'aws-sdk' {
-//    var foo:any;
-//    export = foo;
-// }
-
 declare const AWS: any;
 
 import {Component,OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
-//import * as AWS from 'aws-sdk';
-//import * as FB from 'FB';
-
-
 
 @Component({
     selector: 'sthree',
@@ -23,65 +10,65 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 })
 
 export class SThreeComponent implements OnInit{
-    policy: String;
-    s3signature: String;
-    files: File[];
-    uploadedImgUrl:URL;
-    uploadResult:String;
+  policy: String;
+  s3signature: String;
+  files: File[];
+  uploadedImgUrl:URL;
+  uploadResult:String;
 
-    //Use our uploadService
-    constructor(){
-      
-    }
+  //Use our uploadService
+  constructor(){
 
+  }
+
+
+  ngOnInit() {
+
+  }
     
-    ngOnInit() {
-        
-    }
-    
-    handleLoginClick(){
-      console.log("clicked login button");
-      FB.login(function (response) {
+  handleLoginClick(){
+    console.log("clicked login button");
+    FB.login(function (response) {
       if (response.authResponse) { // logged in
-        debugger;
+      
         AWS.config.credentials = new AWS.WebIdentityCredentials({
           RoleArn: 'arn:aws:iam::144917287062:role/sgn-app-dev-img-upload-fb',
           ProviderId: 'graph.facebook.com',
           WebIdentityToken: response.authResponse.accessToken
         });
 
-        
-
         console.log('You are now logged in.');
-      } else {
+      } 
+      else {
         console.log('There was a problem logging you in.');
       }
     });
-    
-    }
-    
-    onChange(event) {
+
+  }
+  
+  //had to do this because the binding to a file input doesnt work quite right since it holds its value in an attribute called files, not value  
+  onChange(event) {
     this.files = event.srcElement.files;
     console.log(this.files);
   }
+
     
-    
-    handleUploadFileClick(){
-      
+  handleUploadFileClick(){
+
     console.log(this.files);
     var file = this.files[0];
     if (file) {
-       //results.innerHTML = '';
-var bucket = new AWS.S3({params: {Bucket: 'sgn-app-dev'}});
+      //get instact of bucket to upload to
+      var bucket = new AWS.S3({params: {Bucket: 'sgn-app-dev'}});
       var params = {Key: file.name, ContentType: file.type, Body: file};
+      //upload the file to the bucket
       bucket.upload(params, function (err, data) {
-        //debugger;
-        //results.innerHTML = err ? 'ERROR!' : 'UPLOADED.<img src="' + data.Location + '" alt="Smiley face" height="42" width="42">';
         this.uploadResult = err ? 'ERROR!' : 'UPLOADED';        
         this.uploadedImgUrl = data.Location;
         console.log(err ? 'ERROR!' : 'UPLOADED' + data.Location);
       }.bind(this));
-    } else {
+    } 
+    else {
       console.log('Nothing to upload.');
       this.uploadResult = 'Nothing to upload.';
     }
