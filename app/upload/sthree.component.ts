@@ -26,6 +26,8 @@ export class SThreeComponent implements OnInit{
     policy: String;
     s3signature: String;
     files: File[];
+    uploadedImgUrl:URL;
+    uploadResult:String;
 
     //Use our uploadService
     constructor(){
@@ -75,11 +77,13 @@ var bucket = new AWS.S3({params: {Bucket: 'sgn-app-dev'}});
       bucket.upload(params, function (err, data) {
         //debugger;
         //results.innerHTML = err ? 'ERROR!' : 'UPLOADED.<img src="' + data.Location + '" alt="Smiley face" height="42" width="42">';
+        this.uploadResult = err ? 'ERROR!' : 'UPLOADED';        
+        this.uploadedImgUrl = data.Location;
         console.log(err ? 'ERROR!' : 'UPLOADED' + data.Location);
-      });
+      }.bind(this));
     } else {
       console.log('Nothing to upload.');
-      //results.innerHTML = 'Nothing to upload.';
+      this.uploadResult = 'Nothing to upload.';
     }
   }
       
