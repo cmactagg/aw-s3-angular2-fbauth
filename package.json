@@ -1,0 +1,19 @@
+{
+  "name": "aw-s3-angular2-fbauth",
+  "version": "1.0.0",
+  "description": "readme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmactagg/aw-s3-angular2-fbauth.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmactagg/aw-s3-angular2-fbauth/issues"
+  },
+  "homepage": "https://github.com/cmactagg/aw-s3-angular2-fbauth#readme"
+}
