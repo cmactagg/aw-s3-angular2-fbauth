@@ -6,8 +6,8 @@ import {SThreeComponent} from "./upload/sthree.component";
     selector: 'my-app',
     directives: [SThreeComponent],
     template: `
-    <h1>Angular2 is awesome</h1>
-    <!--<></uploader>-->
+    <h1>AWS S3 Angular FBAuth</h1>
+    
     <sthree></sthree>
     `
 })

@@ -16,7 +16,8 @@
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
     <!--Include this for Http module -->
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
-
+<!--<script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.16.min.js"></script>-->
+<!--<script src="/node_modules/aws-sdk/dist/aws-sdk.js"></script>-->
 
 
     <!— 2. Configure SystemJS —>
@@ -33,6 +34,23 @@
         });
         System.import('app/main')
                 .then(null, console.error.bind(console));
+                
+                
+      (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   
+   window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1708094952776490',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
     </script>
 </head>
 
