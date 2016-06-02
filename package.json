@@ -26,6 +26,12 @@
     "systemjs": "0.19.25",
     "zone.js": "0.6.6"
   },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.12"
+  },
   "bugs": {
     "url": "https://github.com/cmactagg/aw-s3-angular2-fbauth/issues"
   },

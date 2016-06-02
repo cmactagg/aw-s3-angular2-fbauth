@@ -1,12 +1,11 @@
 import {Component,OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {UploadService} from "./upload.service";
 
 
 @Component({
     selector: 'sthree',
     templateUrl: 'app/upload/sthree.component.html',
-    providers: [UploadService,HTTP_PROVIDERS]
+    providers: [HTTP_PROVIDERS]
 })
 
 export class SThreeComponent implements OnInit{
@@ -15,7 +14,7 @@ export class SThreeComponent implements OnInit{
     file: File;
 
     //Use our uploadService
-    constructor(private _uploadService: UploadService){}
+    constructor(){}
 
     //Map the policy and signature
     handleResponse(response){
