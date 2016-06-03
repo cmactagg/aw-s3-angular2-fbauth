@@ -4,12 +4,12 @@ import {Component,OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
 @Component({
-    selector: 'sthree',
-    templateUrl: 'app/upload/sthree.component.html',
+    selector: 'simple-upload-fb',
+    templateUrl: 'app/upload/simple-upload-fb.component.html',
     providers: [HTTP_PROVIDERS]
 })
 
-export class SThreeComponent implements OnInit{
+export class SimpleUploadFBComponent implements OnInit{
   policy: String;
   s3signature: String;
   files: File[];

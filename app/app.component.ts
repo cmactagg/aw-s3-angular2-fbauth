@@ -1,14 +1,14 @@
 import {Component} from 'angular2/core';
-import {SThreeComponent} from "./upload/sthree.component";
+import {SimpleUploadFBComponent} from "./upload/simple-upload-fb.component";
 
 
 @Component({
     selector: 'my-app',
-    directives: [SThreeComponent],
+    directives: [SimpleUploadFBComponent],
     template: `
-    <h1>AWS S3 Angular FBAuth</h1>
+    <h1>AWS S3 Angular2 Upload</h1>
     
-    <sthree></sthree>
+    <simple-upload-fb></simple-upload-fb>
     `
 })
 
