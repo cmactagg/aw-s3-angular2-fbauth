@@ -47,12 +47,22 @@ app.use(passport.session());
 // Redirect the user to Facebook for authentication.  When complete,
 // Facebook will redirect the user back to the application at
 //     /auth/facebook/callback
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook', {display: 'popup'}));
 
 app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
+  
+  req.session.destroy(function (err) {
+    res.redirect('/'); //Inside a callback… bulletproof!
+  });
+  
+  // console.log(req.access_token);
+  // req.logout();
+  // req.session.destroy();
+  
+  //res.redirect('/');
+ // res.send("logged out", 401);
+  // https://graph.facebook.com/me/permissions?access_token=EAAOXt0PKkdwBAN4z6ZC9vNd6ocpOB4BZArWxFGpqZBblj4MZCSojZAGDxpjPOpZCuKnUei8QfiMZB39EBUbHrcI1oCROdHwDfxAGULOp53PK8ZCLqyLbFmpZBn7VM4pok7sEBRZC9nPdng25h102XQUyVk5PNHuJkkweEZD
+}.bind(this));
 
 // Facebook will redirect the user to this URL after approval.  Finish the
 // authentication process by attempting to obtain an access token.  If
@@ -92,10 +102,15 @@ passport.use(
     clientID: nconf.get('auth_facebook_appid'),
     clientSecret: nconf.get('auth_facebook_appsecret'),
     callbackURL: nconf.get('auth_facebook_callbackurl'),
+    
+    profileFields: ['id', 'displayName', 'photos', 'email', 'birthday', 'gender'],
+    
+    //auth_type: 'reauthenticate',
     passReqToCallback: true
   },
     
   function(request, accessToken, refreshToken, profile, done) {
+    console.log(accessToken);
     process.nextTick(function() {
       /**
        * Build attributes object containing
