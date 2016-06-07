@@ -33,14 +33,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.set('trust proxy', 1) // trust first proxy 
-app.use(session({ secret: 'my_precious' }));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+
+
 app.use(passport.initialize());
-  app.use(passport.session());
+app.use(passport.session());
 
 // Redirect the user to Facebook for authentication.  When complete,
 // Facebook will redirect the user back to the application at
 //     /auth/facebook/callback
 app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 // Facebook will redirect the user to this URL after approval.  Finish the
 // authentication process by attempting to obtain an access token.  If
@@ -53,6 +65,18 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/',
                                       failureRedirect: '/login' }));
+
+app.get('/api/user_data', function(req, res) {
+
+            if (req.user === undefined) {
+                // The user is not logged in
+                res.json({});
+            } else {
+                res.json({
+                    username: req.user
+                });
+            }
+        });
 
 
 app.use(userProfileRoute.rootRoutePath, userProfileRoute);
@@ -88,7 +112,7 @@ passport.use(
        * the authentication information we got
        */
       
-     done(null, "123345");
+     done(null, profile);
 
     }); // end process.newTick()
 
