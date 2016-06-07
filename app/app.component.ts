@@ -7,7 +7,7 @@ import {SimpleUploadFBComponent} from "./upload/simple-upload-fb.component";
     directives: [SimpleUploadFBComponent],
     template: `
     <h1>AWS S3 Angular2 Upload</h1>
-    
+    <a href="/auth/facebook">Login with Facebook</a>
     <simple-upload-fb></simple-upload-fb>
     `
 })
